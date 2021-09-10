@@ -70,25 +70,31 @@ function reqListenerFiveJokes () {
 
 }
 
+function createButton(category) {
+    let btnCategory = document.createElement("button");
+    btnCategory.classList.add("btn")
+    btnCategory.classList.add("btn-success")
+    btnCategory.textContent = category;
+    btnCategory.addEventListener("click", () => {
+        getRandomJoke(category)
+    })
+    divListBtnCat.appendChild(btnCategory)
+}
+
 function reqCategories(){
     let categories = JSON.parse(this.responseText)
     console.log(categories);
     categories.forEach(category =>{
-        let btnCategory = document.createElement("button");
-        btnCategory.classList.add("btn")
-        btnCategory.classList.add("btn-success")
-        btnCategory.textContent = category;
-        btnCategory.addEventListener("click",()=>{
-            getRandomJoke(category)
-        })
-        divListBtnCat.appendChild(btnCategory)
+        createButton(category);
     })
 }
 
-{
+function getCategories(){
     let request = new XMLHttpRequest();
     request.open("GET", "https://api.chucknorris.io/jokes/categories");
     request.onload = reqCategories;
     request.send();
 }
+
+getCategories()
 
